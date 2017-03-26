@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Model.tbl_Url>
+@using UtilityClass
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Manage URLS</h2>
+
+<p>
+    @Html.ActionLink("Pending Url", "Index", new { CheckState = "Pending" })||
+    @Html.ActionLink("Approved Url", "Index", new { CheckState = "Approved" })||
+    @Html.ActionLink("Rejected Urls", "Index", new { CheckState = "Rejected" })
+</p>
+<div id="Data">
+    @Html.Partial("PartialApprovedView",Model)
+</div>
+<div id="loading" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Loading...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress progress-striped active">
+                    <div class="progress-bar" style="width:100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="button" id="Approve" value="Approve" class="btn btn-primary" /> |
+<input type="button" id="Reject" value="Reject" class="btn btn-primary" />
+
+@section scriptplace{
+    <script>
+        $(function () {
+            selectall();
+            UrlCondition();
+            $(document).ajaxStart(function () {
+                $("#loading").show();
+            });
+
+            $(document).ajaxStop(function () {
+                $("#loading").hide();
+            });
+
+        })
+
+        function approvesingle(urlid) {
+            $.post("@Url.Action("Approve","ApprovedUrl")", { id: urlid, state: "Approve" }, function (data) {
+                $("#Data").html(data);
+            });
+
+        }
+        function rejectsingle(urlid) {
+            $.post("@Url.Action("Approve","ApprovedUrl")", { id: urlid, state: "Reject" }, function (data) {
+                $("#Data").html(data);
+            });
+
+        }
+        function selectall() {
+            $("#selectall").click(function () {
+                if (this.checked) {
+                    $('.ckb').each(function () {
+                        this.checked = true;
+                    });
+                } else {
+                    $('.ckb').each(function () {
+                        this.checked = false;
+                    });
+                }
+            });
+        }
+        function UrlCondition() {
+            $("#Approve").click(function () {
+                ajaxapproveandreject("Approve");
+            });
+            $("#Reject").click(function () {
+                ajaxapproveandreject("Reject");
+            });
+        }
+        function ajaxapproveandreject(checkstate) {
+            //return selected items to be processed
+            var checkIds = $(".ckb").filter(":checked").map(function () { return this.id; });
+            $.post("@Url.Action("Approve","ApprovedUrl")", { id: 0, ItemList: checkIds.toArray(), state: checkstate }, function (data) {
+                $("#Data").html(data);
+                selectall();
+            });
+
+        }
+
+        
+    </script>
+
+
+}

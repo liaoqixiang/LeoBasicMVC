@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Model.tbl_Url>
+@using UtilityClass
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("UrlTitle", "Index", new {SortOrder = ViewBag.SortOrder == "ASC" ? "Desc" : "ASC", SortBy = "UrlTitle" })
+        </th>
+        <th>
+            @Html.ActionLink("Url", "Index", new {SortOrder = ViewBag.SortOrder1 == "ASC" ? "Desc" : "ASC", SortBy = "Url" })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UrlDesc)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.tbl_Category.CategoryName)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlTitle)
+            </td>
+            <td>
+                <a href="@item.Url">@item.Url</a>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlDesc)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.tbl_Category.CategoryName)
+            </td>
+
+            
+        </tr>
+    }
+
+
+
+</table>
+<ul class="pagination pagination-sm col-lg-6 col-md-6 col-sm-6" style="float: right">
+    <li><a href="?pageIndex=1&SortOrder=@ViewBag.SortOrder&SortBy=@ViewBag.SortBy">&laquo;</a></li>
+    @Html.Raw(@PageBarHelper.PageBar(new { pageIndex = ViewBag.pageIndex, TotalPage = ViewBag.TotalPage }, new { SortOrder = ViewBag.SortOrder, SortBy = ViewBag.SortBy }, ViewBag.CheckState))
+    <li><a href="?pageIndex=@ViewBag.TotalPage&SortOrder=@ViewBag.SortOrder&SortBy=@ViewBag.SortBy">&raquo;</a></li>
+</ul>

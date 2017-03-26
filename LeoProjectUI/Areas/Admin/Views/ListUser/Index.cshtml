@@ -1,0 +1,39 @@
+﻿@model IEnumerable<Model.tbl_User>
+@using UtilityClass
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("UserEmail","Index", new { SortOrder = ViewBag.SortOrder == "ASC" ? "Desc" : "ASC", SortBy = "UserEmail", pageIndex = ViewBag.pageIndex })
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.Role)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserEmail)
+        </td>
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.Role)
+        </td>
+        
+    </tr>
+}
+
+</table>
+<ul class="pagination pagination-sm col-lg-6 col-md-6 col-sm-6" style="float: right">
+    <li><a href="?pageIndex=1&SortOrder=@ViewBag.SortOrder&SortBy=@ViewBag.SortBy">&laquo;</a></li>
+    @Html.Raw(@PageBarHelper.PageBar(new { pageIndex = ViewBag.pageIndex, TotalPage = ViewBag.TotalPage }, new { SortOrder = ViewBag.SortOrder, SortBy = ViewBag.SortBy }, ViewBag.CheckState))
+    <li><a href="?pageIndex=@ViewBag.TotalPage&SortOrder=@ViewBag.SortOrder&SortBy=@ViewBag.SortBy">&raquo;</a></li>
+</ul>
