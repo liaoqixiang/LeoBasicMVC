@@ -17,7 +17,7 @@ Because i have seen some big project and some senior develoers taught me how to 
 
 The Technologies here:
 1. DataBase: MSSQL(MicroSoft Server SQL)
-2. ORM: Entity FrameWork(i can do it in Linq but EF is more powerful)
+2. ORM: Entity FrameWork
 3. Frond-end: Jquery(to ajaxifyling my Mvc App), BootStrap
 4. BackEnd: Asp.net MVC c#.Net
 5. Special: Log4Net to record the errorss and also direct to a error page.
