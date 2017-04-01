@@ -32,12 +32,12 @@ namespace Model
     }
     public class tbl_UserValidation
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage ="User Email cannot be empty")]
+        [EmailAddress(ErrorMessage = "User Email Address should be in correct format")]
         [UniqueUser]
         public string UserEmail { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "User Email cannot be empty")]
         public string Password { get; set; }
     }
 

@@ -8,10 +8,8 @@ namespace Model
 {
     public class tbl_CategoryValidation
     {
-        [Required]
+        [Required(ErrorMessage ="Category Name cannot be empty")]
         public string CategoryName { get; set; }
-
-     
         public string CategoryDesc { get; set; }
     }
     [MetadataType(typeof(tbl_CategoryValidation))]
